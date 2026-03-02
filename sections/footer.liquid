@@ -17,7 +17,7 @@
 
 <footer class="luxe-footer full-width">
   <div class="luxe-footer__container">
-    <div class="luxe-footer__top">
+    <div class="luxe-footer__row">
       <div class="luxe-footer__socials" aria-label="Social links">
         <a href="{{ instagram_link }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
           <svg viewBox="0 0 24 24" fill="none" focusable="false">
@@ -36,12 +36,7 @@
         </a>
         <a href="{{ twitter_link }}" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
           <svg viewBox="0 0 24 24" fill="none" focusable="false">
-            <path
-              d="m5 5 14 14m0-14L5 19"
-              stroke="currentColor"
-              stroke-width="1.6"
-              stroke-linecap="round"
-            ></path>
+            <path d="m5 5 14 14m0-14L5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
           </svg>
         </a>
       </div>
@@ -72,7 +67,7 @@
     margin-top: 0;
     background-color: #070707;
     color: #e9dbc2;
-    border-top: 1px solid rgb(255 255 255 / 9%);
+    border-top: 1px solid rgb(218 191 142 / 24%);
   }
 
   .luxe-footer a {
@@ -81,18 +76,20 @@
   }
 
   .luxe-footer__container {
-    width: min(1200px, calc(100% - 2rem));
+    width: min(500px, calc(100% - 0.5rem));
     margin-inline: auto;
-    padding: 1rem 0 1.2rem;
+    border-left: 1px solid rgb(218 191 142 / 32%);
+    border-right: 1px solid rgb(218 191 142 / 32%);
+    padding: 0.58rem 0.48rem 0.68rem;
     display: grid;
-    gap: 0.9rem;
+    gap: 0.44rem;
   }
 
-  .luxe-footer__top {
+  .luxe-footer__row {
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem;
   }
 
   .luxe-footer__socials,
@@ -100,16 +97,15 @@
   .luxe-footer__payments {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.4rem;
   }
 
   .luxe-footer__socials a {
+    width: 0.92rem;
+    height: 0.92rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 1.2rem;
-    height: 1.2rem;
-    color: #e9dbc2;
     opacity: 0.9;
   }
 
@@ -120,11 +116,12 @@
 
   .luxe-footer__links {
     justify-self: center;
-    font-size: 0.72rem;
+    font-size: 0.55rem;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #c8b288;
+    color: #cab38a;
     flex-wrap: wrap;
+    justify-content: center;
   }
 
   .luxe-footer__payments {
@@ -132,23 +129,24 @@
   }
 
   .luxe-footer__payment-icon svg {
-    width: 2rem;
+    width: 1.5rem;
     height: auto;
-    opacity: 0.78;
+    opacity: 0.75;
   }
 
   .luxe-footer__legal {
     text-align: center;
-    font-size: 0.66rem;
+    font-size: 0.52rem;
     letter-spacing: 0.06em;
     color: #b49d72;
   }
 
-  @media (max-width: 899px) {
-    .luxe-footer__top {
+  @media (max-width: 420px) {
+    .luxe-footer__row {
       grid-template-columns: 1fr;
       justify-items: center;
       text-align: center;
+      gap: 0.45rem;
     }
 
     .luxe-footer__payments {
@@ -158,18 +156,22 @@
     }
   }
 
-  @media (max-width: 749px) {
+  @media (min-width: 520px) {
     .luxe-footer__container {
-      width: calc(100% - 1rem);
-      padding-bottom: 1rem;
+      width: 500px;
+    }
+
+    .luxe-footer__socials a {
+      width: 1rem;
+      height: 1rem;
     }
 
     .luxe-footer__links {
-      justify-content: center;
+      font-size: 0.61rem;
     }
 
     .luxe-footer__legal {
-      font-size: 0.62rem;
+      font-size: 0.57rem;
     }
   }
 {% endstylesheet %}
@@ -208,7 +210,7 @@
       "type": "text",
       "id": "legal_text",
       "label": "Legal text",
-      "default": "\u00a9 2026 Luxe Hair. All rights reserved."
+      "default": "Copyright 2026 Luxe Hair. All rights reserved."
     }
   ]
 }

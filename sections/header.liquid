@@ -3,6 +3,23 @@
   if brand_name == blank
     assign brand_name = shop.name
   endif
+
+  assign left_link_title = 'Shop'
+  assign left_link_url = routes.all_products_collection_url
+  assign right_link_title = 'Contact'
+  assign right_link_url = '/pages/contact'
+
+  if section.settings.menu != blank
+    assign menu_links = section.settings.menu.links
+    if menu_links.size > 0
+      assign left_link_title = menu_links[0].title
+      assign left_link_url = menu_links[0].url
+    endif
+    if menu_links.size > 1
+      assign right_link_title = menu_links[1].title
+      assign right_link_url = menu_links[1].url
+    endif
+  endif
 %}
 
 <header class="luxe-header full-width">
@@ -10,24 +27,17 @@
     <p class="luxe-header__announcement">{{ section.settings.announcement_text }}</p>
   {% endif %}
 
-  <div class="luxe-header__nav-shell">
-    <div class="luxe-header__nav">
-      <nav class="luxe-header__menu" aria-label="Primary">
-        {% if section.settings.menu != blank %}
-          {% for link in section.settings.menu.links %}
-            <a href="{{ link.url }}">{{ link.title }}</a>
-          {% endfor %}
-        {% else %}
-          <a href="{{ routes.all_products_collection_url }}">Shop</a>
-          <a href="/pages/contact">Contact</a>
-        {% endif %}
-      </nav>
+  <div class="luxe-header__shell">
+    <div class="luxe-header__row">
+      <a class="luxe-header__edge-link" href="{{ left_link_url }}">{{ left_link_title }}</a>
 
       <p class="luxe-header__brand">
         <a href="{{ routes.root_url }}">{{ brand_name }}</a>
       </p>
 
-      <div class="luxe-header__actions">
+      <a class="luxe-header__edge-link luxe-header__edge-link--right" href="{{ right_link_url }}">{{ right_link_title }}</a>
+
+      <div class="luxe-header__icons">
         <a class="luxe-header__icon-link" href="{{ routes.search_url }}" aria-label="Search">
           <svg viewBox="0 0 20 20" fill="none" focusable="false">
             <circle cx="8.8" cy="8.8" r="4.8" stroke="currentColor" stroke-width="1.5"></circle>
@@ -57,7 +67,7 @@
     --icon-stroke-width: 1.4;
     background-color: #080808;
     color: #f7ecd8;
-    border-bottom: 1px solid rgb(255 255 255 / 9%);
+    border-bottom: 1px solid rgb(218 191 142 / 24%);
   }
 
   .luxe-header a {
@@ -67,63 +77,64 @@
 
   .luxe-header__announcement {
     text-align: center;
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
+    font-size: 0.54rem;
+    letter-spacing: 0.13em;
     text-transform: uppercase;
     color: #d0bb92;
-    padding: 0.62rem 1rem;
-    border-bottom: 1px solid rgb(255 255 255 / 9%);
+    padding: 0.38rem 0.4rem;
+    border-bottom: 1px solid rgb(218 191 142 / 24%);
   }
 
-  .luxe-header__nav-shell {
-    width: min(1200px, calc(100% - 2rem));
+  .luxe-header__shell {
+    width: min(500px, calc(100% - 0.5rem));
     margin-inline: auto;
+    border-left: 1px solid rgb(218 191 142 / 32%);
+    border-right: 1px solid rgb(218 191 142 / 32%);
   }
 
-  .luxe-header__nav {
+  .luxe-header__row {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: auto 1fr auto auto;
     align-items: center;
-    min-height: 4.2rem;
-    gap: 0.6rem;
+    gap: 0.38rem;
+    min-height: 2.9rem;
+    padding: 0 0.48rem;
   }
 
-  .luxe-header__menu,
-  .luxe-header__actions {
-    display: inline-flex;
-    align-items: center;
-    gap: 1rem;
-    min-width: 0;
-  }
-
-  .luxe-header__menu {
-    justify-self: start;
-    font-size: 0.8rem;
-    text-transform: uppercase;
+  .luxe-header__edge-link {
+    font-size: 0.62rem;
     letter-spacing: 0.08em;
-    color: color-mix(in srgb, #f7ecd8 80%, #d0bb92);
+    text-transform: none;
+    color: #ecddc0;
+  }
+
+  .luxe-header__edge-link--right {
+    justify-self: end;
   }
 
   .luxe-header__brand {
     justify-self: center;
     font-family: 'Times New Roman', serif;
-    letter-spacing: 0.1em;
-    font-size: clamp(1.2rem, 2.2vw, 2rem);
+    letter-spacing: 0.08em;
+    font-size: clamp(1.05rem, 5.4vw, 1.9rem);
     text-transform: uppercase;
     white-space: nowrap;
   }
 
-  .luxe-header__actions {
+  .luxe-header__icons {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.34rem;
     justify-self: end;
   }
 
   .luxe-header__icon-link {
     position: relative;
+    width: 0.98rem;
+    height: 0.98rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 1.3rem;
-    height: 1.3rem;
     color: #f7ecd8;
   }
 
@@ -134,46 +145,39 @@
 
   .luxe-header__cart-count {
     position: absolute;
-    top: -0.35rem;
-    right: -0.4rem;
-    min-width: 1rem;
-    padding-inline: 0.22rem;
+    top: -0.25rem;
+    right: -0.26rem;
+    min-width: 0.72rem;
+    padding-inline: 0.1rem;
     border-radius: 999px;
     background-color: #d2b27b;
-    color: #131313;
-    font-size: 0.62rem;
+    color: #151515;
+    font-size: 0.5rem;
     font-weight: 700;
     text-align: center;
-    line-height: 1rem;
+    line-height: 0.72rem;
   }
 
-  @media (max-width: 749px) {
+  @media (min-width: 520px) {
     .luxe-header__announcement {
-      font-size: 0.6rem;
-      letter-spacing: 0.09em;
+      font-size: 0.59rem;
     }
 
-    .luxe-header__nav-shell {
-      width: calc(100% - 1rem);
+    .luxe-header__shell {
+      width: 500px;
     }
 
-    .luxe-header__nav {
-      grid-template-columns: auto 1fr auto;
-      min-height: 3.8rem;
-    }
-
-    .luxe-header__menu {
-      gap: 0.55rem;
-      font-size: 0.68rem;
+    .luxe-header__edge-link {
+      font-size: 0.71rem;
     }
 
     .luxe-header__brand {
-      font-size: clamp(1rem, 6vw, 1.4rem);
-      text-align: center;
+      font-size: 2rem;
     }
 
-    .luxe-header__actions {
-      gap: 0.7rem;
+    .luxe-header__icon-link {
+      width: 1.06rem;
+      height: 1.06rem;
     }
   }
 {% endstylesheet %}
