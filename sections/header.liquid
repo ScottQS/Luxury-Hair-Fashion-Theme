@@ -1,65 +1,207 @@
-<header>
-  <h2 class="header__title">
-    {{ shop.name | link_to: routes.root_url }}
-  </h2>
+{% liquid
+  assign brand_name = section.settings.brand_name
+  if brand_name == blank
+    assign brand_name = shop.name
+  endif
 
-  <div class="header__menu">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
+  assign left_link_title = 'Shop'
+  assign left_link_url = routes.all_products_collection_url
+  assign right_link_title = 'Contact'
+  assign right_link_url = '/pages/contact'
 
-  <div class="header__icons">
-    {% if shop.customer_accounts_enabled %}
-      {{ 'icon-account.svg' | inline_asset_content | link_to: routes.account_url }}
-    {% endif %}
+  if section.settings.menu != blank
+    assign menu_links = section.settings.menu.links
+    if menu_links.size > 0
+      assign left_link_title = menu_links[0].title
+      assign left_link_url = menu_links[0].url
+    endif
+    if menu_links.size > 1
+      assign right_link_title = menu_links[1].title
+      assign right_link_url = menu_links[1].url
+    endif
+  endif
+%}
 
-    <a href="{{ routes.cart_url }}">
-      {% if cart.item_count > 0 %}
-        <sup>{{ cart.item_count }}</sup>
-      {% endif %}
+<header class="luxe-header full-width">
+  {% if section.settings.announcement_text != blank %}
+    <p class="luxe-header__announcement">{{ section.settings.announcement_text }}</p>
+  {% endif %}
 
-      {{ 'icon-cart.svg' | inline_asset_content }}
-    </a>
+  <div class="luxe-header__shell">
+    <div class="luxe-header__row">
+      <a class="luxe-header__edge-link" href="{{ left_link_url }}">{{ left_link_title }}</a>
+
+      <p class="luxe-header__brand">
+        <a href="{{ routes.root_url }}">{{ brand_name }}</a>
+      </p>
+
+      <a class="luxe-header__edge-link luxe-header__edge-link--right" href="{{ right_link_url }}">{{ right_link_title }}</a>
+
+      <div class="luxe-header__icons">
+        <a class="luxe-header__icon-link" href="{{ routes.search_url }}" aria-label="Search">
+          <svg viewBox="0 0 20 20" fill="none" focusable="false">
+            <circle cx="8.8" cy="8.8" r="4.8" stroke="currentColor" stroke-width="1.5"></circle>
+            <path d="m12.6 12.6 3.4 3.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+          </svg>
+        </a>
+
+        {% if shop.customer_accounts_enabled %}
+          <a class="luxe-header__icon-link" href="{{ routes.account_url }}" aria-label="Account">
+            {{ 'icon-account.svg' | inline_asset_content }}
+          </a>
+        {% endif %}
+
+        <a class="luxe-header__icon-link luxe-header__cart-link" href="{{ routes.cart_url }}" aria-label="Cart">
+          {{ 'icon-cart.svg' | inline_asset_content }}
+          {% if cart.item_count > 0 %}
+            <span class="luxe-header__cart-count">{{ cart.item_count }}</span>
+          {% endif %}
+        </a>
+      </div>
+    </div>
   </div>
 </header>
 
 {% stylesheet %}
-  header {
-    height: 5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  .luxe-header {
+    --icon-stroke-width: 1.4;
+    background-color: #080808;
+    color: #f7ecd8;
+    border-bottom: 1px solid rgb(218 191 142 / 24%);
   }
-  header a {
-    position: relative;
+
+  .luxe-header a {
+    color: inherit;
     text-decoration: none;
-    color: var(--color-foreground);
   }
-  header a sup {
+
+  .luxe-header__announcement {
+    text-align: center;
+    font-size: 0.5rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: #d0bb92;
+    padding: 0.38rem 0.4rem;
+    border-bottom: 1px solid rgb(218 191 142 / 24%);
+  }
+
+  .luxe-header__shell {
+    width: min(478px, calc(100% - 0.45rem));
+    margin-inline: auto;
+    border-left: 1px solid rgb(218 191 142 / 32%);
+    border-right: 1px solid rgb(218 191 142 / 32%);
+  }
+
+  .luxe-header__row {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    gap: 0.38rem;
+    min-height: 2.8rem;
+    padding: 0 0.48rem;
+  }
+
+  .luxe-header__edge-link {
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: none;
+    color: #ecddc0;
+  }
+
+  .luxe-header__edge-link--right {
+    justify-self: end;
+  }
+
+  .luxe-header__brand {
+    justify-self: center;
+    font-family: 'Times New Roman', serif;
+    letter-spacing: 0.08em;
+    font-size: clamp(1.05rem, 5.4vw, 1.9rem);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .luxe-header__icons {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.34rem;
+    justify-self: end;
+  }
+
+  .luxe-header__icon-link {
+    position: relative;
+    width: 0.98rem;
+    height: 0.98rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #f7ecd8;
+  }
+
+  .luxe-header__icon-link svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .luxe-header__cart-count {
     position: absolute;
-    left: 100%;
-    overflow: hidden;
-    max-width: var(--page-margin);
+    top: -0.25rem;
+    right: -0.26rem;
+    min-width: 0.72rem;
+    padding-inline: 0.1rem;
+    border-radius: 999px;
+    background-color: #d2b27b;
+    color: #151515;
+    font-size: 0.5rem;
+    font-weight: 700;
+    text-align: center;
+    line-height: 0.72rem;
   }
-  header svg {
-    width: 2rem;
-  }
-  header .header__menu,
-  header .header__icons {
-    display: flex;
-    gap: 1rem;
+
+  @media (min-width: 520px) {
+    .luxe-header__announcement {
+      font-size: 0.56rem;
+    }
+
+    .luxe-header__shell {
+      width: 478px;
+    }
+
+    .luxe-header__edge-link {
+      font-size: 0.71rem;
+    }
+
+    .luxe-header__brand {
+      font-size: 1.88rem;
+    }
+
+    .luxe-header__icon-link {
+      width: 1.06rem;
+      height: 1.06rem;
+    }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:general.header",
+  "name": "Header",
   "settings": [
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement text",
+      "default": "FREE EXPRESS SHIPPING ON ALL ORDERS $200+"
+    },
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Brand name",
+      "default": "LUXE HAIR"
+    },
     {
       "type": "link_list",
       "id": "menu",
-      "label": "t:labels.menu"
+      "label": "Menu"
     }
   ]
 }

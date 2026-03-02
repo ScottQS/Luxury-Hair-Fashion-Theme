@@ -9,12 +9,85 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "hello-world",
-      "settings": {}
+    "luxe_homepage": {
+      "type": "luxe-homepage",
+      "settings": {},
+      "blocks": {
+        "product_card_1": {
+          "type": "product_card",
+          "settings": {
+            "title": "Body Wave Bundle Deal",
+            "price_text": "$230.00",
+            "compare_price_text": "$290.00",
+            "button_label": "SHOP NOW",
+            "show_badge": true,
+            "badge_text": "NEW"
+          }
+        },
+        "product_card_2": {
+          "type": "product_card",
+          "settings": {
+            "title": "Curly Bundle Deal",
+            "price_text": "$330.00",
+            "compare_price_text": "$390.00",
+            "button_label": "SHOP NOW",
+            "show_badge": true,
+            "badge_text": "NEW"
+          }
+        },
+        "product_card_3": {
+          "type": "product_card",
+          "settings": {
+            "title": "Straight Bundle Deal",
+            "price_text": "$330.00",
+            "compare_price_text": "$390.00",
+            "button_label": "SHOP NOW",
+            "show_badge": true,
+            "badge_text": "NEW"
+          }
+        },
+        "product_card_4": {
+          "type": "product_card",
+          "settings": {
+            "title": "Lace Closure Wig",
+            "price_text": "$330.00",
+            "compare_price_text": "$390.00",
+            "button_label": "SHOP NOW",
+            "show_badge": true,
+            "badge_text": "NEW"
+          }
+        },
+        "texture_1": {
+          "type": "texture",
+          "settings": {
+            "label": "Body Wave"
+          }
+        },
+        "texture_2": {
+          "type": "texture",
+          "settings": {
+            "label": "Curly"
+          }
+        },
+        "texture_3": {
+          "type": "texture",
+          "settings": {
+            "label": "Straight"
+          }
+        }
+      },
+      "block_order": [
+        "product_card_1",
+        "product_card_2",
+        "product_card_3",
+        "product_card_4",
+        "texture_1",
+        "texture_2",
+        "texture_3"
+      ]
     }
   },
   "order": [
-    "main"
+    "luxe_homepage"
   ]
 }
